@@ -1,0 +1,33 @@
+name: Weekly README Timestamp Update
+
+on:
+  schedule:
+    # This runs at 00:00 every Sunday
+    - cron: '0 0 * * 0'
+  workflow_dispatch: # Allows you to run it manually for testing
+
+permissions:
+  contents: write
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Update first line of README
+        run: |
+          # Create a timestamp
+          TIMESTAMP=$(date +"%Y-%m-%d %H:%M:%S")
+          # Use sed to replace the first line with the new timestamp
+          # If you want to keep a header, adjust the text below
+          sed -i "1s/.*/Last updated: $TIMESTAMP/" README.md
+
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          # Only commit if there are actual changes to avoid errors
+          git diff --quiet && git diff --staged --quiet || (git commit -m "docs: auto-update timestamp [skip ci]" && git push)
