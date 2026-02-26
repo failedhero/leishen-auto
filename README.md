@@ -1,6 +1,6 @@
 # 雷神加速器自动暂停工具
 
-## 20260102
+## 20260226
 
 ![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-Ready-brightgreen)
 ![Go Version](https://img.shields.io/badge/Go-1.24-blue)
